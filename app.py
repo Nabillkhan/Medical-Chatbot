@@ -72,12 +72,12 @@ if user_input:
 
     #Build conversation including past messages
 
-    conversation=SYSTEM_PROMPT + "\n"
+   conversation = SYSTEM_PROMPT + "\n"
 
 for msg in st.session_state.messages:
-    role=msg["role"]
+    role = msg["role"]
     content = msg["content"]
-    conversation += f"(role.capitalize()): (content)\n"
+    conversation += f"{role.capitalize()}: {content}\n"
 
     #Send to Gemini
     response = client.models.generate_content(
