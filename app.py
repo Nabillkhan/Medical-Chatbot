@@ -80,7 +80,6 @@ for msg in st.session_state.messages:
     conversation += f"(role.capitalize()): (content)\n"
 
     #Send to Gemini
- try:
     response = client.models.generate_content(
         model="gemini-1.5-flash",
         contents=conversation
