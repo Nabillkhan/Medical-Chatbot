@@ -1,49 +1,46 @@
 import streamlit as st
 from google import genai
 
-# Streamlit page config
+# Page config
 st.set_page_config(
     page_title="Medical AI Chatbot",
     page_icon="💊",
     layout="centered",
 )
 
-# Initialize Gemini client
+# Initialize Gemini client (API key from secrets)
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
-# System Instructions
+# System Prompt
 SYSTEM_PROMPT = """
 You are a medical assistant chatbot for educational purposes only.
 
-You have access to the previous messages in this chat session.
-Use this memory to provide consistent and helpful responses.
-
-Do not claim that you have no memory of the conversation.
+You have access to previous chat messages.
+Use them to provide helpful and consistent responses.
 
 Guidelines:
-- Provide general medical information and self-care guidance
-- Do NOT diagnose diseases or provide medical advice
-- Do NOT prescribe medications or give dosages
-- Explain symptoms in a general way
-- Suggest common, safe home-care steps when appropriate
-- Clearly mention warning signs that require urgent medical attention
-- Always recommend consulting a licensed doctor for confirmation
-- Be calm, empathetic, and professional
+- Provide general medical information only
+- Do NOT diagnose or prescribe
+- Suggest safe home-care tips
+- Mention warning signs
+- Always recommend consulting a doctor
+- Be calm and professional
 """
 
+# UI
 st.title("💊 Medical AI Chatbot")
-st.caption("Powered by AI | Educational use only")
+st.caption("Educational use only")
 
-# Initialize session message history
+# Session memory
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Show previous messages
+# Show chat history
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# Accept user input
+# User input
 user_input = st.chat_input("Ask a medical question...")
 
 if user_input:
@@ -60,7 +57,7 @@ if user_input:
         conversation += f"{role.capitalize()}: {content}\n"
 
     try:
-        # ✅ FIXED: Proper Gemini format
+        # ✅ Correct Gemini request
         response = client.models.generate_content(
             model="gemini-1.5-flash-latest",
             contents=[
@@ -71,16 +68,17 @@ if user_input:
             ]
         )
 
-        reply = response.text if response.text else "Sorry, I couldn't generate a response."
+        # Extract response safely
+        reply = response.text if response.text else "Sorry, I couldn't understand that."
 
     except Exception as e:
-        reply = f"Error: {str(e)}"
+        reply = f"⚠️ Error: {str(e)}"
 
     # Show assistant reply
     st.session_state.messages.append({"role": "assistant", "content": reply})
     st.chat_message("assistant").markdown(reply)
 
-    # Limit chat history
+    # Limit memory
     MAX_MESSAGES = 20
     st.session_state.messages = st.session_state.messages[-MAX_MESSAGES:]
 
