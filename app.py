@@ -59,7 +59,7 @@ if user_input:
     try:
         # ✅ Correct Gemini request
         response = client.models.generate_content(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             contents=[
                 {
                     "role": "user",
