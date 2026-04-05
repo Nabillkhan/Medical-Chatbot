@@ -84,10 +84,6 @@ for msg in st.session_state.messages:
         model="gemini-1.5-flash",
         contents=conversation
     )
-except Exception as e:
-    print(e)
-    st.write(e)
-
     #Extract text
     reply=response.text
 
