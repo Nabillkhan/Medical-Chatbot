@@ -87,7 +87,6 @@ for msg in st.session_state.messages:
 except Exception as e:
     print(e)
     st.write(e)
-    )
 
     #Extract text
     reply=response.text
