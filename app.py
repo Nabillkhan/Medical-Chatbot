@@ -12,7 +12,7 @@ st.set_page_config(
 
 #Initialize Gemini client using API kay stored in Streamlit secrets
 
-client= genai.Client(api_key=st.secrets("GEMINI_API_KEY"))
+client= genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 #System Instructions
 
