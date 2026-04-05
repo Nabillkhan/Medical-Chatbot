@@ -9,7 +9,7 @@ st.set_page_config(
 )
 
 # Initialize Gemini client (API key from secrets)
-client = genai.Client(api_key="PASTE_YOUR_NEW_KEY_HERE")
+client = genai.Client(api_key="AIzaSyDDc86iq3NcoXT-CEr8BU6fHc5sZmg2REg")
 
 # System Prompt
 SYSTEM_PROMPT = """
