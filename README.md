@@ -1,5 +1,3 @@
-# Medical-Chatbot
-AI enabled medical chatbot
 # Medical Chatbot
 
 
