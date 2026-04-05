@@ -80,9 +80,14 @@ for msg in st.session_state.messages:
     conversation += f"(role.capitalize()): (content)\n"
 
     #Send to Gemini
-    response=client.models.generate_content(
-        model="gemini-2.5-flash",
+ try:
+    response = client.models.generate_content(
+        model="gemini-1.5-flash",
         contents=conversation
+    )
+except Exception as e:
+    print(e)
+    st.write(e)
     )
 
     #Extract text
